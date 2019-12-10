@@ -14,6 +14,7 @@
 </template>
 
 <script lang='ts'>
+import axios from 'axios';
 import {Vue, Component, Prop} from 'vue-property-decorator';
 @Component
 export default class Hello extends Vue {
@@ -31,6 +32,13 @@ export default class Hello extends Vue {
             path:"/discover/playlist"
         },
     ];
+
+    created(){
+        axios.get('/login/status')
+        .then((res)=>{
+            console.log('discover created',res)
+        })
+    }
     mounted(){
         console.log('%c路由','font-size:32px;color:red',this.$route)
     }

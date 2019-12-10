@@ -8,10 +8,11 @@
 import {Vue, Component, Prop} from 'vue-property-decorator'
 @Component
 export default class Hello extends Vue{
-   
+    
 }
 </script>
 
 <style scoped lang='less'>
+
 
 </style>
