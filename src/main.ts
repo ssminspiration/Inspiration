@@ -7,8 +7,8 @@ import Vueaxios from 'vue-axios'
 import './assets/style/index.less'
 
 Vue.config.productionTip = false
-Vue.prototype.$axios = axios;
-
+// Vue.prototype.$axios = axios;
+Vue.use(Vueaxios,axios)
 new Vue({
   router,
   store,

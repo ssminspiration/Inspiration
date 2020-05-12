@@ -1,8 +1,8 @@
 <template>
     <div class="discover-music-wrapper">
         <div class="discover-music-nav">
-            <ul class="mainContent">
-                <li v-for="(item,index) in dataList" :key="index">
+            <ul class="mainContent discover-music-nav-list">
+                <li class="discover-music-nav-item" :class="{selected:(curPath.indexOf(item.path) == 0 && index != 0) || ((curPath === '/' || curPath === '/discover') && index == 0)}" v-for="(item,index) in dataList" :key="index">
                     <router-link :to="item.path">{{item.title}}</router-link>
                 </li>
             </ul>
@@ -14,14 +14,14 @@
 </template>
 
 <script lang='ts'>
-import axios from 'axios';
-import {Vue, Component, Prop} from 'vue-property-decorator';
+import Route from 'vue-router';
+import {Vue, Component, Prop, Watch} from 'vue-property-decorator';
 @Component
-export default class Hello extends Vue {
+export default class Discover extends Vue {
     dataList:Array<Object>=[
         {
             title:"推荐",
-            path:"/discover/recommend"
+            path:"/discover"
         },
         {
             title:"排行榜",
@@ -33,11 +33,28 @@ export default class Hello extends Vue {
         },
     ];
 
-    created(){
-        axios.get('/login/status')
-        .then((res)=>{
-            console.log('discover created',res)
-        })
+    get curPath():string{
+        return this.$route.path;
+    }
+
+    @Watch('$route',{
+        immediate:true,
+    })
+    routeChange(n:Route,o:Route):void{
+        console.log('%cDiscover组件路由watch','font-size:38px;color:yellow',n,o)
+
+    }
+
+
+    async created(){
+        const data = await this.axios.get('/search?keywords=海阔天空')
+        console.log('%c请求结果','font-size:48px;color:green',data)
+        // .then((res)=>{
+        //     console.log('%c请求结果','font-size:48px;color:green',res)
+        // })
+        // .catch((err)=>{
+        //     console.log(err,'错误')
+        // })
     }
     mounted(){
         console.log('%c路由','font-size:32px;color:red',this.$route)
@@ -50,14 +67,19 @@ export default class Hello extends Vue {
         .discover-music-nav{
             background-color: #c20c0c;
             height: 30px;
-            ul{
+            .discover-music-nav-list{
                 height: 100%;
                 padding-left:250px;
                 padding-bottom:5px;
                 display: flex;
                 align-items:center;
-                li{
-                    padding: 0 20px;
+                .discover-music-nav-item{
+                    padding: 2px 10px;
+                    border-radius: 10px;
+                    &.selected{
+                        background-color: rgba(255,255,255,0.3);
+                    }
+                    margin-right:10px;
                     a{
                         font-size:14px;
                     }

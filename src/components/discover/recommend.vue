@@ -8,17 +8,12 @@
 import {Vue, Component, Prop} from 'vue-property-decorator'
 @Component
 export default class Recommend extends Vue{
-    created(){
-        this.$axios.get('/search?keywords=海阔天空')
-        .then((res)=>{
-            console.log('%c请求结果','font-size:48px;color:red',res)
-        })
-        .catch((err)=>{
-            console.log(err,'错误')
-        })
+    created():void{
+      console.log("%crecommend",'font-size:34px;color:blue',this.$route)
+    //   if(this.$route)
     }
     mounted(){
-        console.log("hello world")
+        // console.log("%crecommend",'font-size:34px;color:blue',this.$route)
     }
 }
 </script>

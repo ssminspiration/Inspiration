@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
 import MyMusic from '../views/MyMusic.vue'
 import Friends from '../views/Friends.vue'
 import Discover from '../views/Discover.vue'
@@ -10,9 +9,14 @@ Vue.use(VueRouter)
 const routes = [
     {
         path: '/',
-        redirect:"/discover",
         name: 'home',
-        component: Home
+        component: Discover,
+        children:[
+            {
+                path:'/',
+                component:()=>import('../components/discover/recommend.vue')
+            }
+        ]
     },
     {
         path: '/about',
@@ -29,8 +33,8 @@ const routes = [
         component:Discover,
         children:[
             {
-                path:"recommend",
-                component:()=>import('../components/discover/recommend.vue')
+                path:'/',
+                component:()=>import('@/components/discover/recommend.vue')
             },
             {
                 path:"toplist",

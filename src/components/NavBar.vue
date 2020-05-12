@@ -6,16 +6,16 @@
                 <strong>Inspiration</strong>
             </div>
             <ul class="menu-list">
-                <li v-for="(item,index) in menuList" :key="index" :class="{selected:curPath.indexOf(item.path)==0}">
+                <li v-for="(item,index) in menuList" :key="index" :class="{selected:((curPath === '/' || curPath.indexOf('/discover') == 0) && index == 0) || (curPath.indexOf(item.path) == 0) && index != 0}">
                     <router-link :to="item.path">{{item.text}}</router-link>
-                    <span class="selected-icon" v-show="curPath.indexOf(item.path)==0"></span>
+                    <span class="selected-icon" v-show="((curPath === '/' || curPath.indexOf('/discover') == 0) && index == 0) || (curPath.indexOf(item.path) == 0 && index != 0)"></span>
                 </li>
             </ul>
             <div class="search">
                 <input type="text" placeholder="搜索">
             </div>
             
-            <div class="login" v-if="isLogin">登录</div>
+            <div class="login" v-if="!isLogin">登录</div>
             <div class="userAvatar iconfont avator" v-else>
                
             </div>
@@ -46,7 +46,7 @@ export default class NavBar extends Vue{
     menuList:dataList = [
         {
             text:'发现音乐',
-            path:'/discover'
+            path:'/'
         },
         {
             text:'我的音乐',
@@ -67,35 +67,10 @@ export default class NavBar extends Vue{
 
     @Watch("$route")
         routeChange(n: Object){
-            console.log('%c路由变化','font-size:34px;color:red',n,this.curPath.indexOf(this.menuList[0].path))
-            console.log('%chh变化','font-size:34px;color:green',this.curPath,this.menuList[0].path)
+            console.log('%c路由变化','font-size:34px;color:red',n,
+            this.curPath)
         }
-    
-
-    
-
 } 
-// interface Test{
-//     name:string
-// }
-// export default {
-//     data ():Test{
-//         return {
-//             name:"Lucy"
-//         }
-//     },
-//     components:{
-
-//     },
-//     methods: {},
-//     beforeCreate:function(){},
-//     created:function(){
-//         let test:Test = {
-//             name:"Lucy"
-//         }
-//     },
-//     mounted:function(){},
-// }
 </script>
 
 <style scoped lang="less">
@@ -166,6 +141,10 @@ export default class NavBar extends Vue{
                     outline: none;
                 }
             }
+            .login{
+                color:#3089d5;
+                cursor: pointer;
+            }
             .userAvatar{
                 width: 40px;
                 height: 40px;
@@ -174,7 +153,7 @@ export default class NavBar extends Vue{
                 overflow: hidden;
                 box-shadow: 0 0 5px #3089d5;
                 font-size:40px;
-                color:#3089d5
+                color:#3089d5;
             }
         }
     }
