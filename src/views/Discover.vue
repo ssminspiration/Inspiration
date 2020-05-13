@@ -49,12 +49,6 @@ export default class Discover extends Vue {
     async created(){
         const data = await this.axios.get('/search?keywords=海阔天空')
         console.log('%c请求结果','font-size:48px;color:green',data)
-        // .then((res)=>{
-        //     console.log('%c请求结果','font-size:48px;color:green',res)
-        // })
-        // .catch((err)=>{
-        //     console.log(err,'错误')
-        // })
     }
     mounted(){
         console.log('%c路由','font-size:32px;color:red',this.$route)

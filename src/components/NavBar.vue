@@ -15,10 +15,12 @@
                 <input type="text" placeholder="搜索">
             </div>
             
-            <div class="login" v-if="!isLogin">登录</div>
-            <div class="userAvatar iconfont avator" v-else>
+            <el-button v-if="!isLogin" type="text" >登录</el-button>
+            <el-avatar v-else src="@/assets/img/time.jpeg"></el-avatar>
+            <!-- <div class="login" v-if="!isLogin">登录</div>
+            <div class="userAvatar iconfont avator" v-else> -->
                
-            </div>
+            <!-- </div> -->
         </div>
     </div>
 </template>
@@ -41,7 +43,7 @@ export default class NavBar extends Vue{
     
     @Prop(String) name!:string;
     @Prop(Number) age!:number;
-    isLogin:boolean = false;
+    isLogin:boolean = true;
     hobby:string = 'running';
     menuList:dataList = [
         {

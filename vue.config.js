@@ -7,12 +7,14 @@ module.exports = {
             proxy:{
                 "/search":{
                     target: "http://localhost:3000",
+                    changeOrigin: true,
                     // pathRewrite:{
                     //     "^/api":""
                     // }
                 },
-                "/login/status":{
-                    target:"http://localhost:3000/"
+                "/login":{
+                    target:"http://localhost:3000",
+                    changeOrigin: true,
                 }
             }
         }
