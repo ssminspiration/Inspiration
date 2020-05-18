@@ -2,7 +2,7 @@
    <div class="login_register_dialog_wrapper">
         <div class="dialog_top">
             <span class="text">登录</span>
-            <span class="closeDialog">关闭</span>
+            <span class="closeDialog" @click.stop="closeDialog">关闭</span>
             </div>
         <div class="form_chart">
             <p class="input_item">
@@ -20,7 +20,11 @@
                 <!-- <button class="login_btn" @click.stop="login">登录</button>
                 <button class="register_btn" @click.stop="register">注册</button> -->
                 <el-button type="primary" @click.stop="login">登录</el-button>
-                <el-button type="primary" @click.stop="register">注册</el-button>
+                
+            </p>
+            <p class="register">
+                <span>没有账号，去</span>
+                <el-button type="text" @click.stop="register">注册</el-button>
             </p>
         </div>
    </div>
@@ -72,6 +76,10 @@ export default class Login extends Vue{
             })
         })
     }
+
+    closeDialog():void{
+        this.$emit('upDateLoginShow',false)
+    }
 }
 </script>
 
@@ -87,11 +95,14 @@ export default class Login extends Vue{
         .dialog_top{
             height: 40px;
             background-color: #191919;
-            color: #fff;;
+            color: #fff;
             padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            .closeDialog{
+                cursor: pointer;
+            }
         }
 
         .form_chart{
@@ -140,6 +151,12 @@ export default class Login extends Vue{
                 //         margin-right: 30px;
                 //     }
                 // }
+            }
+            
+            .register{
+                .el-button{
+                    font-size:16px;
+                }
             }
         }
     }

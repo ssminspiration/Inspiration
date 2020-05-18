@@ -3,7 +3,7 @@
     <div id="ins-nav">
       <!-- <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> -->
-      <nav-bar name="Lucy"></nav-bar>
+      <nav-bar name="Lucy" @upDateLoginShow="upDateLoginShow"></nav-bar>
     </div>
 
     <div id="ins-content">
@@ -14,23 +14,28 @@
     <div id="ins-foot"></div>
 
     <div v-if="isShowDialog" id="ins-dialog-wrapper">
-        <login></login>
+        <login  @upDateLoginShow="upDateLoginShow"></login>
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import NavBar from "@/components/NavBar.vue";
-import Login from "@/components/login/index.vue"
-export default {
-    data(){
-        return {
-            isShowDialog:false
-        }
-    },
+import Login from "@/components/login/index.vue";
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+
+@Component({
     components:{
         NavBar,
         Login
     }
+})
+export default class App extends Vue{
+    isShowDialog:boolean = false;
+
+    upDateLoginShow(value:boolean):void{
+        this.isShowDialog = value;
+    }
+   
 }
 
 </script>

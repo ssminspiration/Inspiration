@@ -15,8 +15,9 @@
                 <input type="text" placeholder="搜索">
             </div>
             
-            <el-button v-if="!isLogin" type="text" >登录</el-button>
-            <el-avatar v-else src="@/assets/img/time.jpeg"></el-avatar>
+            
+            <el-avatar v-if="isLogin" :src="imgUrl"></el-avatar>
+            <el-button v-else type="text" @click.stop="goToLogin">登录</el-button>
             <!-- <div class="login" v-if="!isLogin">登录</div>
             <div class="userAvatar iconfont avator" v-else> -->
                
@@ -43,7 +44,7 @@ export default class NavBar extends Vue{
     
     @Prop(String) name!:string;
     @Prop(Number) age!:number;
-    isLogin:boolean = true;
+    isLogin:boolean = false;
     hobby:string = 'running';
     menuList:dataList = [
         {
@@ -63,8 +64,16 @@ export default class NavBar extends Vue{
     get curPath(){
         return this.$route.path;
     }
+
+    get imgUrl(){
+        return require('../assets/img/fairytales.jpg')
+    }
     changeHobby(){
         this.hobby = 'reading'
+    }
+
+    goToLogin(){
+        this.$emit("upDateLoginShow",true)
     }
 
     @Watch("$route")
