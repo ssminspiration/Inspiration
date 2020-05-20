@@ -15,6 +15,10 @@ module.exports = {
                 "/login":{
                     target:"http://localhost:3000",
                     changeOrigin: true,
+                },
+                "register":{
+                    target:"http://localhost:3000",
+                    changeOrigin:true
                 }
             }
         }
