@@ -29,11 +29,11 @@
             </div>
             <div class="register_page" v-else>
                 <p class="phone_item">
-                    <label for="" class="phone">手机号:</label>
+                    <label for="" class="phone">手机号：</label>
                     <input type="text" placeholder="请输入手机号" v-model="register_phone">
                 </p>
                 <p class="psw_item">
-                    <label for="" class="psw">密码:</label>
+                    <label for="" class="psw">密码：</label>
                     <input 
                     type="password" 
                     placeholder="设置登录密码，不得少于6位" 
@@ -42,11 +42,17 @@
                     @input.stop="checkInput"
                     :class="{warningBorder:!pswType || !pswLen}">
                 </p>
+                
                 <div v-if="isShowPrompt" class="promptMsg">
                     <div class="phoneError" v-show="phoneError">
                         <span class="iconfont icon-jinggao"></span>
                         &nbsp;
                         <span>请输入正确的手机号码</span>
+                    </div>
+                    <div class="vCodeError" v-show="vCodeError">
+                        <span class="iconfont icon-jinggao"></span>
+                        &nbsp;
+                        <span>请输入正确的验证码</span>
                     </div>
                     <div>   
                         <span class="iconfont icon-zhengque"></span>
@@ -64,6 +70,16 @@
                         <span>密码长度为6-16位</span>
                     </div>
                 </div>
+
+                <p class="code_item">
+                    <label for="">验证码：</label>
+                    <input 
+                        type="text" 
+                        placeholder="输入验证码"
+                        class="verificationCode"
+                        v-model="vertifyCode">
+                    <el-button type="text" @click.stop="sendVCode">点击发送验证码</el-button>
+                </p>
                 <el-button type="primary" :disabled="!pswLen || !pswType" @click.stop="register">注册</el-button>
                 <br/>
                 <el-button type="text" @click.stop="backToLogin">返回登录页</el-button>
@@ -88,6 +104,9 @@ export default class Login extends Vue{
     pswValue:string = '';
     register_phone:string = '';
     phoneError:boolean = false;
+    vCodeError:boolean = false;
+    vertifyCode:string = '';
+    phoneReg:any = /^1[34578]\d{9}$/;
 
     login():void{
         const phone = this.phone.trim();
@@ -127,12 +146,33 @@ export default class Login extends Vue{
     }
     register():void{
         const phone = this.register_phone.trim();
-        const reg = /^1[34578]\d{9}$/;
-        !reg.test(phone) && (this.phoneError = true);
+        const vCode = this.vertifyCode.trim();
+        let num = 0;
+        if(!this.phoneReg.test(phone)){
+            this.phoneError = true;
+            num++;
+        }
+        else this.phoneError = false;
+        
+        if(!vCode) {
+            this.vCodeError = true;
+            num++
+        }
+        else this.vCodeError = false;
 
-        this.axios.get("/register/cellphone",{
-            
+        if(num > 0) return;
+        
+        // 验证验证码是否正确
+        this.axios.post("/captcha/verify",{
+            phone:phone,
+            captcha:vCode
         })
+        .then((res)=>{
+            console.log('验证码验证结果',res)
+        })
+        // this.axios.get("/register/cellphone",{
+        //     // captcha:
+        // })
     }
 
     goToregister():void{
@@ -141,6 +181,7 @@ export default class Login extends Vue{
 
     backToLogin():void{
         this.onLogin = true;
+        this.isShowPrompt = false;
     }
 
     handleFocus():void{
@@ -167,6 +208,31 @@ export default class Login extends Vue{
         else this.pswLen = true;
        
     }
+    
+    sendVCode():void{
+        if(!this.phoneReg.test(this.register_phone)){
+            this.$message({
+                type:"warning",
+                message:"请输入正确的手机号码",
+                offset:500
+            })
+            return;
+        }
+        this.axios.post('/captcha/sent',{
+            phone:this.register_phone,
+            ctcode:'86'
+        })
+        .then((res)=>{
+            console.log('%c验证码发送成功','font-size:36px;color:red',res)
+            if(res.data.code == 200){
+                console.log('验证码发送成功')
+            }
+        })
+        .catch((err)=>{
+            console.log('验证码发送失败',err)
+        })
+    }
+
     closeDialog():void{
         this.$emit('upDateLoginShow',false)
     }
@@ -197,8 +263,9 @@ export default class Login extends Vue{
 
         .form_chart{
             width: 240px;
-            margin: 50px auto;
+            margin: 0 auto;
             .login_page{
+                margin:50px 0;
                 .input_item{
                     margin-bottom: 40px;
                     text-align: left;
@@ -237,31 +304,35 @@ export default class Login extends Vue{
             }
             .register_page{
                 margin:0 auto;
-                width: 220px;
+                width: 300px;
                 p{
                     display: flex;
-                    flex-direction: column;
-                    align-items: flex-start;
+                    align-items: center;
                     justify-content: space-between;
-                    height: 56px;
-                    margin-bottom: 8px;
+                    height: 50px;
+                    margin-bottom: 6px;
                     font-size:14px;
                     input{
-                        width: 100%;
+                        width: 70%;
                         height: 26px;
                         &::-webkit-input-placeholder{
                             font-size:12px;
                         }
                     }
+                    &.code_item{
+                        .verificationCode{
+                            width: 125px;
+                            height: 26px;
+                        }
+                    }
+                    
                 }
                 .psw_item{
-                   
-                    .warningBorder{
+                    .warningBorder:focus{
                         outline:none;
                         border: solid 1px #e33232;
                     }
                 }
-
                 .promptMsg{
                     font-size:12px;
                     color:#ccc;
@@ -269,7 +340,7 @@ export default class Login extends Vue{
                     flex-direction: column;
                     align-items: flex-start;
                     margin-bottom: 10px;
-                    .warning,.phoneError{
+                    .warning,.phoneError,.vCodeError{
                         color: #e33232;
                     }
                 }

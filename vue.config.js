@@ -19,6 +19,14 @@ module.exports = {
                 "register":{
                     target:"http://localhost:3000",
                     changeOrigin:true
+                },
+                "/captcha/sent":{
+                    target:"http://localhost:3000",
+                    changeOrigin:true
+                },
+                "/captcha/verify":{
+                    target:"http://localhost:3000",
+                    changeOrigin:true
                 }
             }
         }
