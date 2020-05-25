@@ -124,7 +124,12 @@ export default class Login extends Vue{
         })
         .then((res)=>{
             console.log('登录请求',res)
-            if(res.data.code === 502){
+            if(res.data.code === 200 && res.data.loginType == 1){
+                // 登录成功
+                this.$store.commit("changeLoginStatus",true)
+                let token = res.data.token;
+            }
+            else{
                 // 表示手机号或密码不正确，或者该手机未注册
                 this.$message({
                     message:"用户名或密码错误",
@@ -168,11 +173,34 @@ export default class Login extends Vue{
             captcha:vCode
         })
         .then((res)=>{
-            console.log('验证码验证结果',res)
+            console.log('yanzhenma',vCode)
+            if(res.data.code == 200){
+                console.log('验证码正确')
+            }else{
+                throw new Error('验证码错误')
+            }
+            return true;  //
         })
-        // this.axios.get("/register/cellphone",{
-        //     // captcha:
-        // })
+        .catch((err)=>{
+            console.log('11111111',err)
+            return false;
+        })
+        .then((v)=>{
+            console.log(22222222,v)
+            if(v){
+                this.axios.post("/register/cellphone",{
+                    captcha:vCode,
+                    phone:phone,
+                    password:this.pswValue,
+                    nickname:'wyy游客'
+                })
+                .then((data)=>{
+                    console.log('注册成功',data)
+                })
+            }
+            
+        })
+     
     }
 
     goToregister():void{
@@ -190,7 +218,6 @@ export default class Login extends Vue{
         this.phoneError = false;
     }
     checkInput():void{
-        console.log(this.pswValue,'kkk')
         const reg1 = /\d+/;
         const reg2 = /[a-zA-Z]+/;
         const reg3 = /[`~!@#\$%\^&*\(\)\|\-\_\+\=\.\{\}\[\]\;\:\'\"<>\?\/\,\\]+/; //特殊符号

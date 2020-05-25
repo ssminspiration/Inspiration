@@ -16,17 +16,20 @@
     <div v-if="isShowDialog" id="ins-dialog-wrapper">
         <login  @upDateLoginShow="upDateLoginShow"></login>
     </div>
+    <player></player>
   </div>
 </template>
 <script lang="ts">
 import NavBar from "@/components/NavBar.vue";
 import Login from "@/components/login/index.vue";
+import Player from "@/components/player.vue";
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 
 @Component({
     components:{
         NavBar,
-        Login
+        Login,
+        Player
     }
 })
 export default class App extends Vue{
@@ -59,6 +62,7 @@ export default class App extends Vue{
       position:fixed;
       top:0;
       background-color: rgba(0,0,0,0.3);
+      z-index: 10;
   }
 }
 

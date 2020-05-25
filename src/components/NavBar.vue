@@ -18,10 +18,7 @@
             
             <el-avatar v-if="isLogin" :src="imgUrl"></el-avatar>
             <el-button v-else type="text" @click.stop="goToLogin">登录</el-button>
-            <!-- <div class="login" v-if="!isLogin">登录</div>
-            <div class="userAvatar iconfont avator" v-else> -->
-               
-            <!-- </div> -->
+            
         </div>
     </div>
 </template>
@@ -44,7 +41,6 @@ export default class NavBar extends Vue{
     
     @Prop(String) name!:string;
     @Prop(Number) age!:number;
-    isLogin:boolean = false;
     hobby:string = 'running';
     menuList:dataList = [
         {
@@ -67,6 +63,10 @@ export default class NavBar extends Vue{
 
     get imgUrl(){
         return require('../assets/img/fairytales.jpg')
+    }
+
+    get isLogin():boolean{
+        return this.$store.state.loginStatus;
     }
     changeHobby(){
         this.hobby = 'reading'

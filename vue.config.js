@@ -4,6 +4,7 @@ module.exports = {
             hot:true,
             port:7777,
             host:"inspiration.com",
+            open:true,
             proxy:{
                 "/search":{
                     target: "http://localhost:3000",
@@ -16,7 +17,7 @@ module.exports = {
                     target:"http://localhost:3000",
                     changeOrigin: true,
                 },
-                "register":{
+                "/register/cellphone":{
                     target:"http://localhost:3000",
                     changeOrigin:true
                 },
