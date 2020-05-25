@@ -38,6 +38,35 @@ export default class App extends Vue{
     upDateLoginShow(value:boolean):void{
         this.isShowDialog = value;
     }
+    async created(){
+        const res = await this.axios.get("/login/status");
+        if(res.data.code === 200){
+            // 已登录
+            const userId:string = res.data.profile.userId,
+                    nickName:string = res.data.profile.nickname,
+                    avatarUrl:string = res.data.profile.avatarUrl;
+            this.$store.commit("changeLoginStatus",true)
+            this.$store.commit("changeUserInfo",{
+                userId,
+                nickName,
+                avatarUrl
+            })
+
+            // const detail = await this.axios.post("/user/detail",{
+            //     uid:userId
+            // })
+
+            // if(detail.data.code === 200){
+
+            // }
+
+            const userPlayList = await this.axios.post("/user/subcount")
+            console.log('用户歌单',userPlayList)
+        }else{
+            console.log("未登录")
+        }
+       
+    }
    
 }
 

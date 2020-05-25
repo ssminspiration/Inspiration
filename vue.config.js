@@ -28,7 +28,11 @@ module.exports = {
                 "/captcha/verify":{
                     target:"http://localhost:3000",
                     changeOrigin:true
-                }
+                },
+                "/user":{
+                    target:"http://localhost:3000",
+                    changeOrigin:true
+                },
             }
         }
     }

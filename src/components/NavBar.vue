@@ -62,7 +62,7 @@ export default class NavBar extends Vue{
     }
 
     get imgUrl(){
-        return require('../assets/img/fairytales.jpg')
+        return this.$store.state.userInfo.avatarUrl;
     }
 
     get isLogin():boolean{
@@ -78,8 +78,8 @@ export default class NavBar extends Vue{
 
     @Watch("$route")
         routeChange(n: Object){
-            console.log('%c路由变化','font-size:34px;color:red',n,
-            this.curPath)
+            // console.log('%c路由变化','font-size:34px;color:red',n,
+            // this.curPath)
         }
 } 
 </script>

@@ -18,8 +18,6 @@
                 </p>
 
                 <p class="btn">
-                    <!-- <button class="login_btn" @click.stop="login">登录</button>
-                    <button class="register_btn" @click.stop="register">注册</button> -->
                     <el-button type="primary" @click.stop="login">登录</el-button>
                 </p>
                 <p class="register">
@@ -127,7 +125,16 @@ export default class Login extends Vue{
             if(res.data.code === 200 && res.data.loginType == 1){
                 // 登录成功
                 this.$store.commit("changeLoginStatus",true)
-                let token = res.data.token;
+                const token = res.data.token;
+                const userId = res.data.profile.userId;
+                const nickName = res.data.profile.nickname; 
+                const avatarUrl = res.data.profile.avatarUrl;
+                this.$store.commit("changeUserInfo",{
+                    userId,
+                    nickName,
+                    avatarUrl
+                })
+                // console.log('%c登录状态','font-size:38px;color:red;',this.$store.state.loginStatus)
             }
             else{
                 // 表示手机号或密码不正确，或者该手机未注册
@@ -250,7 +257,7 @@ export default class Login extends Vue{
             ctcode:'86'
         })
         .then((res)=>{
-            console.log('%c验证码发送成功','font-size:36px;color:red',res)
+            // console.log('%c验证码发送成功','font-size:36px;color:red',res)
             if(res.data.code == 200){
                 console.log('验证码发送成功')
             }
