@@ -19,7 +19,7 @@ Vue.use(Avatar);
 // Vue.use(VueAwesomeSwiper);  //全局使用swiper
 Vue.prototype.$message = Message;
 
-new Vue({
+window['wyy'] = new Vue({
   router,
   store,
   render: h => h(App)

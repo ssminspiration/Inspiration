@@ -11,7 +11,8 @@ export default new Vuex.Store({
             userId:'',          //用户ID
             nickName:'',        //昵称
             avatarUrl:'',       //头像
-        }
+        },
+        requestDone:false,      // App.vue 的created生命周期函数内的请求是否完成
     },
     mutations: {
         changeLoginStatus(state,value){
@@ -21,10 +22,18 @@ export default new Vuex.Store({
             for(var k in state.userInfo){
                 state.userInfo[k] = obj[k];
             }
+        },
+        changeRequestStatus(state,v){
+            console.log('执行了',v)
+            state.requestDone = v;
         }
 
     },
     actions: {
+        // action提交的是mutation.而不是直接变更状态
+        changeRequestStatus({commit},v){
+            commit('changeRequestStatus',v)
+        }
     },
     modules: {
     }

@@ -24,6 +24,7 @@ import NavBar from "@/components/NavBar.vue";
 import Login from "@/components/login/index.vue";
 import Player from "@/components/player.vue";
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { Mutation, Action } from 'vuex-class';
 
 @Component({
     components:{
@@ -38,34 +39,32 @@ export default class App extends Vue{
     upDateLoginShow(value:boolean):void{
         this.isShowDialog = value;
     }
+    
+    @Action("changeRequestStatus") requestChange;
+    @Mutation("changeLoginStatus") changeLoginStatus
+    @Mutation("changeUserInfo") changeUserInfo;
     async created(){
         const res = await this.axios.get("/login/status");
+        this.requestChange(true); // 请求完成
         if(res.data.code === 200){
             // 已登录
-            const userId:string = res.data.profile.userId,
+            const  userId:string = res.data.profile.userId,
                     nickName:string = res.data.profile.nickname,
                     avatarUrl:string = res.data.profile.avatarUrl;
-            this.$store.commit("changeLoginStatus",true)
-            this.$store.commit("changeUserInfo",{
+
+            this.changeLoginStatus(true)
+            this.changeUserInfo({
                 userId,
                 nickName,
                 avatarUrl
             })
-
-            // const detail = await this.axios.post("/user/detail",{
-            //     uid:userId
-            // })
-
-            // if(detail.data.code === 200){
-
-            // }
-
-            const userPlayList = await this.axios.post("/user/subcount")
-            console.log('用户歌单',userPlayList)
         }else{
             console.log("未登录")
         }
-       
+    }
+
+    mounted():void{
+        console.log('%cApp mounted','font-size:36px;color:orange')
     }
    
 }

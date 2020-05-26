@@ -10,7 +10,7 @@
                <div class="middle">
                    <span class="song-img"></span>
                    <span class="progress">
-                       <audio :src="musicUrl" controls autoplay="autoplay" loop="loop">
+                       <audio :src="musicUrl" controls autoplay="autoplay" loop="loop" ref="audioEle" v-show="false">
                            您的浏览器不支持audio标签
                        </audio>
                    </span>
@@ -21,21 +21,56 @@
                    <div class="tansform-btn"></div>
                    <div class="sound"></div>
                    <div class="play-ways"></div>
-                   <div class="play-"></div>
+                   <div class="play-list"></div>
                </div>
-               
            </div>
        </div>
    </div>
 </template>
 
 <script lang='ts'>
-import {Vue, Component, Prop} from 'vue-property-decorator'
-@Component
+import {Vue, Component, Prop, Watch} from 'vue-property-decorator';
+import { State } from 'vuex-class';
+@Component({
+    components:{
+    }
+})
 export default class Player extends Vue{
-   get musicUrl():void{
-       return require('../assets/music/eason.mp3')
-   }
+    audioEle:object = null;
+    get musicUrl():void{
+        return require('../assets/music/eason.mp3')
+    }
+
+    @State('requestDone') requestStatus;
+    @State( state => state.userInfo.userId) userId;
+
+    created(){
+    }
+    mounted():void{
+        this.audioEle = this.$refs.audioEle;
+
+        console.log('用户id',this.userId)
+        
+        // this.axios.post("/user/playlist",{
+        //     uid:userId
+        // })
+        // .then((res)=>{
+        //     console.log('歌单',res)
+        // })
+    }
+
+    @Watch("userId")
+        idChange(n,o){
+            if(n){
+                console.log('用户id',this.userId)
+                this.axios.post("/user/playlist",{
+                    uid:this.userId
+                })
+                .then((res)=>{
+                    console.log('歌单',res)
+                })
+            }
+        }
 }
 </script>
 

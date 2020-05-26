@@ -29,6 +29,14 @@ module.exports = {
                     target:"http://localhost:3000",
                     changeOrigin:true
                 },
+                // "/user/subcount":{
+                //     target:"http://localhost:3000",
+                //     changeOrigin:true
+                // },
+                // "/user/playlist":{
+                //     target:"http://localhost:3000",
+                //     changeOrigin:true
+                // },
                 "/user":{
                     target:"http://localhost:3000",
                     changeOrigin:true

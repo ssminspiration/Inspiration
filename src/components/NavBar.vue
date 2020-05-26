@@ -15,10 +15,14 @@
                 <input type="text" placeholder="搜索">
             </div>
             
-            
-            <el-avatar v-if="isLogin" :src="imgUrl"></el-avatar>
-            <el-button v-else type="text" @click.stop="goToLogin">登录</el-button>
-            
+            <div class="avatar-box" @mouseenter="handleEnter">
+                <el-avatar v-if="isLogin" :src="imgUrl" @click="handleEnter"></el-avatar>
+                <el-button v-else type="text" @click.stop="goToLogin">登录</el-button>
+                
+                <div class="user-info" v-show="isLogin && showUserInfo">
+
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -42,6 +46,7 @@ export default class NavBar extends Vue{
     @Prop(String) name!:string;
     @Prop(Number) age!:number;
     hobby:string = 'running';
+    showUserInfo:boolean = false;
     menuList:dataList = [
         {
             text:'发现音乐',
@@ -74,6 +79,11 @@ export default class NavBar extends Vue{
 
     goToLogin(){
         this.$emit("upDateLoginShow",true)
+    }
+
+    handleEnter():void{
+        console.log('mouseenter')
+        this.showUserInfo = true;
     }
 
     @Watch("$route")
@@ -156,15 +166,22 @@ export default class NavBar extends Vue{
                 color:#3089d5;
                 cursor: pointer;
             }
-            .userAvatar{
+            .avatar-box{
                 width: 40px;
                 height: 40px;
-                line-height: 40px;
-                border-radius: 50%;
-                overflow: hidden;
-                box-shadow: 0 0 5px #3089d5;
-                font-size:40px;
-                color:#3089d5;
+                position: relative;
+                .user-info{
+                    width: 160px;
+                    height: 240px;
+                    position:absolute;
+                    top:40px;
+                    left:50%;
+                    transform: translateX(-50%);
+                    // left:50%;
+                    // margin-left: -80px;
+                    background-color: #2b2b2b;
+                    z-index: 10;
+                }
             }
         }
     }
