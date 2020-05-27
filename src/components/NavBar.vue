@@ -20,7 +20,7 @@
                 <el-button v-else type="text" @click.stop="goToLogin">登录</el-button>
                 
                 <div class="user-info" v-show="isLogin && showUserInfo">
-
+                    <user-info></user-info>
                 </div>
             </div>
         </div>
@@ -34,19 +34,24 @@
  * vue-property-decorator 在vue-class-component的基础上增加了更多与Vue相关的装饰器
  */
 import {Vue, Component,  Prop, Watch} from 'vue-property-decorator';
+import userInfo from "@/components/dialog/userInfo.vue";
 interface dataList{
     [index:number]: {
         path:string,
         text:string
     }
 }
-@Component
+@Component({
+    components:{
+        userInfo
+    }
+})
 export default class NavBar extends Vue{
     
     @Prop(String) name!:string;
     @Prop(Number) age!:number;
     hobby:string = 'running';
-    showUserInfo:boolean = false;
+    showUserInfo:boolean = true;
     menuList:dataList = [
         {
             text:'发现音乐',

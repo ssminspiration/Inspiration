@@ -3,14 +3,14 @@
        <div class="background-bar">
            <div class="main">
                <div class="left">
-                   <span class="prev-btn iconfont icon-shangyishou"></span>
-                   <span class="play-btn iconfont icon-bofang"></span>
-                   <span class="next-btn iconfont icon-xiayishou"></span>
+                   <span class="prev-btn iconfont icon-prev"></span>
+                   <span class="play-btn iconfont icon-play"></span>
+                   <span class="next-btn iconfont icon-next"></span>
                </div>
                <div class="middle">
                    <span class="song-img"></span>
                    <span class="progress">
-                       <audio :src="musicUrl" controls autoplay="autoplay" loop="loop" ref="audioEle" v-show="false">
+                       <audio :src="musicUrl" controls loop="loop" ref="audioEle" v-show="false">
                            您的浏览器不支持audio标签
                        </audio>
                    </span>

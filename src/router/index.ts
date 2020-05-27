@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import MyMusic from '../views/MyMusic.vue'
 import Friends from '../views/Friends.vue'
 import Discover from '../views/Discover.vue'
-
+import UserHome from '../components/user/home.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -56,6 +56,18 @@ const routes = [
         path:"/friends",
         name:"friends",
         component:Friends,
+    },
+    {
+        path:"/user",
+        name:"user",
+        component:() => import("../views/User.vue"),
+        children:[
+            {
+                path:"home",
+                component:UserHome
+            }
+        ]
+        
     }
 ]
 

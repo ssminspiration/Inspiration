@@ -58,9 +58,16 @@ export default class App extends Vue{
                 nickName,
                 avatarUrl
             })
+            const detail = await this.axios.post("/user/detail",{
+                uid:userId
+            })
+
+            console.log('详情',detail)
         }else{
             console.log("未登录")
         }
+
+        
     }
 
     mounted():void{
