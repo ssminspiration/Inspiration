@@ -64,8 +64,30 @@ const routes = [
         children:[
             {
                 path:"home",
+                // redirect:"event",
+                // redirect:{name:"event"}, //重定向的目标也可以是一个命名的路由
+                // redirect:() => "event",  // 可以是一个方法，返回重定向的方法 
+                // redirect:() => ({ path:"event" }),  
                 component:UserHome
-            }
+            },
+            {
+                path:"event",
+                name:"event", //命名路由
+                component:Event
+            },
+            {
+                path:"follows",
+                alias:"myFollows", //别名
+                // component:Follows
+            },
+            {
+                path:"fans",
+                // component:Follows
+            },
+            {
+                path:"follows",
+                // component:Follows
+            },
         ]
         
     }
