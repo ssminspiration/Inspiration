@@ -21,7 +21,7 @@ export default class UserInfo extends Vue{
        {
            icon:"icon-home",
            text:"我的主页",
-           path:"/user/home",
+           path:"/user/home/k?q=ssm",
        },
        {
            icon:"icon-msg",

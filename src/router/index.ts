@@ -63,16 +63,23 @@ const routes = [
         component:() => import("../views/User.vue"),
         children:[
             {
-                path:"home",
+                path:"home/:id",
                 // redirect:"event",
                 // redirect:{name:"event"}, //重定向的目标也可以是一个命名的路由
                 // redirect:() => "event",  // 可以是一个方法，返回重定向的方法 
                 // redirect:() => ({ path:"event" }),  
-                component:UserHome
+                component:UserHome,
+                // props:true  //布尔模式，如果props被设置为true route.params将会被设置为组件属性
+                props:{
+                    id:'true',
+                    hello:"world"
+                },
+                // props:(route)=> ({query:route.query.q})
+
             },
             {
                 path:"event",
-                name:"event", //命名路由
+                // name:"event", //命名路由
                 component:Event
             },
             {

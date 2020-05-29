@@ -18,7 +18,7 @@ import Route from 'vue-router';
 import {Vue, Component, Prop, Watch} from 'vue-property-decorator';
 @Component
 export default class Discover extends Vue {
-    dataList:Array<Object>=[
+    dataList:Array<object> = [
         {
             title:"推荐",
             path:"/discover"
@@ -30,7 +30,7 @@ export default class Discover extends Vue {
         {
             title:"歌单",
             path:"/discover/playlist"
-        },
+        }, 
     ];
 
     get curPath():string{
@@ -42,7 +42,7 @@ export default class Discover extends Vue {
     })
     routeChange(n:Route,o:Route):void{
         console.log('%cDiscover组件路由watch','font-size:38px;color:yellow',n,o)
-
+        
     }
 
 

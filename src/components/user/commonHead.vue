@@ -8,8 +8,8 @@
                <div class="top">
                    <div class="t-l">
                        <span>{{nickname}}</span>
-                       <span>{{level}}</span>
-                       <span>{{gender}}</span>
+                       <span>Lv.{{level}}</span>
+                       <span class="iconfont" :class="gender == 1 ? 'icon-male' : 'icon-female'"></span>
                    </div>
                    <div class="t-r">
                        编辑个人资料
@@ -17,14 +17,29 @@
                </div>
                <div class="bottom">
                    <div class="b-t">
-                       <span class="event"></span>
-                       <span class="follows"></span>
-                       <span class="fans"></span>
+                        <span class="event">
+                            <span class="count">{{eventCount}}</span>
+                            <span class="text">动态</span>
+                        </span>
+                        <span class="follows">
+                            <span class="count">{{follows}}</span>
+                            <span class="text">关注</span>
+                        </span>
+                        <span class="fans">
+                            <span class="count">{{fans}}</span>
+                            <span class="text">粉丝</span>
+                        </span>
                    </div>
                    <div class="b-b">
-                       <div class="signature"></div>
-                       <div class="location"></div>
-                       <div class="socialNetWork"></div>
+                       <p class="signature">
+                           个人介绍：{{signature}}
+                       </p>
+                       <p class="location">
+                           所在地区：
+                       </p>
+                       <p class="socialNetWork">
+                           社交网络：
+                       </p>
                    </div>
                </div>
            </div>
@@ -82,9 +97,6 @@ export default class Hello extends Vue{
         console.log('%c$router是路由实例','font-size:36px;color:red',this.$router)
         console.log('%c$route当前路由','font-size:36px;color:red',this.$route)
         // this.$router.push({path:"/discover"})
-        setTimeout(() => {
-            this.$router.push({path:"/discover"})
-        }, 2000);
 
     }
 }
@@ -93,6 +105,7 @@ export default class Hello extends Vue{
 <style scoped lang='less'>
     .user-profile-common-wrapper{
         width: 100%;
+        margin-bottom: 43px;
         .user-profile{
                 display:flex;
                 justify-content: space-between;
@@ -116,9 +129,34 @@ export default class Hello extends Vue{
                         justify-content:space-between;
                         align-items: center;
                         .t-l{
+                            display: flex;
+                            align-items:center;
+                            span{
+                                margin-right: 10px;
+                            }
                             span:nth-child(1){
                                 font-size:26px;
                                 // font-weight: bold;
+                            }
+                            span:nth-child(2){
+                                display: inline-block;
+                                width: 50px;
+                                height: 20px;
+                                border-radius:20px;
+                                color: red;
+                                border:solid 1px red;
+                                font-style:italic;
+                                font-weight: bold;
+                            }
+
+                            span:nth-child(3){
+                                font-size:20px;
+                                &.icon-male{
+                                    color:skyblue;
+                                }
+                                &.icon-female{
+                                    color:pink;
+                                }
                             }
                         }
                         .t-r{
@@ -128,6 +166,36 @@ export default class Hello extends Vue{
                             border: solid 1px #ccc;
                             border-radius: 5px;
                             font-size:14px;
+                        }
+                    }
+                    .bottom{
+                        .b-t{
+                            margin:10px 0;
+                            display: flex;
+                            .event,.follows,.fans{
+                                width: 65px;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content:space-between;
+                                .count{
+                                    font-size:24px;
+                                }
+                                .text{
+                                    font-size:12px;
+                                }
+                            }
+                            .follows{
+                                border-left:solid 1px #ccc;
+                                border-right:solid 1px #ccc;
+                            }
+                        }
+                        .b-b{
+                            text-align: left;
+                            margin-top: 15px;
+                            p{
+                                font-size:12px;
+                                margin-bottom: 10px;
+                            }
                         }
                     }
                 }
