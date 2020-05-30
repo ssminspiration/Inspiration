@@ -87,7 +87,7 @@ export default class NavBar extends Vue{
     }
 
     handleEnter():void{
-        console.log('mouseenter')
+        // console.log('mouseenter')
         this.showUserInfo = true;
     }
 

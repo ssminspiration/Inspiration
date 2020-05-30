@@ -41,17 +41,17 @@ export default class Discover extends Vue {
         immediate:true,
     })
     routeChange(n:Route,o:Route):void{
-        console.log('%cDiscover组件路由watch','font-size:38px;color:yellow',n,o)
+        // console.log('%cDiscover组件路由watch','font-size:38px;color:yellow',n,o)
         
     }
 
 
     async created(){
         const data = await this.axios.get('/search?keywords=海阔天空')
-        console.log('%c请求结果','font-size:48px;color:green',data)
+        // console.log('%c请求结果','font-size:48px;color:green',data)
     }
     mounted(){
-        console.log('%c路由','font-size:32px;color:red',this.$route)
+        // console.log('%c路由','font-size:32px;color:red',this.$route)
     }
 }
 </script>

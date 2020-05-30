@@ -24,7 +24,7 @@ export default new Vuex.Store({
             }
         },
         changeRequestStatus(state,v){
-            console.log('执行了',v)
+            // console.log('执行了',v)
             state.requestDone = v;
         }
 

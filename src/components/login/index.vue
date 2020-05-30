@@ -121,7 +121,7 @@ export default class Login extends Vue{
             password:psw,
         })
         .then((res)=>{
-            console.log('登录请求',res)
+            // console.log('登录请求',res)
             if(res.data.code === 200 && res.data.loginType == 1){
                 // 登录成功
                 this.$store.commit("changeLoginStatus",true)
@@ -147,7 +147,7 @@ export default class Login extends Vue{
             }
         })
         .catch((err)=>{
-            console.log('错误')
+            // console.log('错误')
              this.$message({
                 message:"登录失败",
                 center:true,
@@ -180,20 +180,20 @@ export default class Login extends Vue{
             captcha:vCode
         })
         .then((res)=>{
-            console.log('yanzhenma',vCode)
+            // console.log('yanzhenma',vCode)
             if(res.data.code == 200){
-                console.log('验证码正确')
+                // console.log('验证码正确')
             }else{
                 throw new Error('验证码错误')
             }
             return true;  //
         })
         .catch((err)=>{
-            console.log('11111111',err)
+            // console.log('11111111',err)
             return false;
         })
         .then((v)=>{
-            console.log(22222222,v)
+            // console.log(22222222,v)
             if(v){
                 this.axios.post("/register/cellphone",{
                     captcha:vCode,
@@ -220,7 +220,7 @@ export default class Login extends Vue{
     }
 
     handleFocus():void{
-        console.log('focus啦')
+        // console.log('focus啦')
         this.isShowPrompt = true;
         this.phoneError = false;
     }
@@ -259,11 +259,11 @@ export default class Login extends Vue{
         .then((res)=>{
             // console.log('%c验证码发送成功','font-size:36px;color:red',res)
             if(res.data.code == 200){
-                console.log('验证码发送成功')
+                // console.log('验证码发送成功')
             }
         })
         .catch((err)=>{
-            console.log('验证码发送失败',err)
+            // console.log('验证码发送失败',err)
         })
     }
 

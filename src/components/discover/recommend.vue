@@ -92,17 +92,17 @@ export default class Recommend extends Vue{
         return this.$refs.mySwiper['$swiper'];
     }
     handleSwiperReadied(swiper:Swiper):void{
-        console.log("Swiper was mouonted",swiper)
+        // console.log("Swiper was mouonted",swiper)
     }
     handleClickSlide(index:number, reallyIndex:number | null):void{
-        console.log("Click slide!",index,reallyIndex)
+        // console.log("Click slide!",index,reallyIndex)
     }
 
     created():void{
         
     }
     mounted(){
-        console.log("%crecommend",'font-size:34px;color:blue',this.swiper)
+        // console.log("%crecommend",'font-size:34px;color:blue',this.swiper)
         this.swiper.slideTo(3,2000,false)
     }
 }

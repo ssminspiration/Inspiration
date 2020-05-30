@@ -1,38 +1,41 @@
 <template>
     <div class="songs-relative-list-wrapper">
-        <div class="songs-rank"></div>
+        <songs-rank></songs-rank>
         <div class="created-list"></div>
         <div class="subscribed-list"></div>
     </div>
 </template>
 
 <script lang='ts'>
-import {Vue, Component, Prop} from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import { State } from 'vuex-class';
-@Component
+import { songsRecord } from "@/components/interface/userInfo.ts";
+import songsRank from "./songsRank.vue";
+@Component({
+    components:{
+        songsRank
+    }
+})
 export default class Hello extends Vue{
     @State( state => state.userInfo.userId) uid;
-    
+    songsCount:number = 0;
+    recordList:songsRecord = [];
    
     async created(){
         const res = await this.axios.post("/user/subcount");
-                console.log('用户信息',res)
+                // console.log('用户信息',res)
         const playlist = await this.axios.post("/user/playlist",{
             uid:this.uid
         })
 
-        console.log('歌单',playlist)
-
-        const record = await this.axios.post("/user/record",{
-            uid:this.uid,
-            type:1  //返回最近一周播放记录
-        })
-
-        console.log('record',record)
+        // console.log('歌单',playlist)
     }
 }
 </script>
 
 <style scoped lang='less'>
-
+    .songs-relative-list-wrapper{
+        width:100%;
+        
+    }
 </style>

@@ -87,15 +87,15 @@ export default class Hello extends Vue{
 
 
 
-        console.log('用户详情',res)
+        // console.log('用户详情',res)
     }
     beforeRouteLeave(){
-        console.log('%cbeforeRouteLeave','font-size:36px;color:red')
+        // console.log('%cbeforeRouteLeave','font-size:36px;color:red')
     }
 
     mounted():void{
-        console.log('%c$router是路由实例','font-size:36px;color:red',this.$router)
-        console.log('%c$route当前路由','font-size:36px;color:red',this.$route)
+        // console.log('%c$router是路由实例','font-size:36px;color:red',this.$router)
+        // console.log('%c$route当前路由','font-size:36px;color:red',this.$route)
         // this.$router.push({path:"/discover"})
 
     }

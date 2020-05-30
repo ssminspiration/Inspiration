@@ -10,11 +10,11 @@
         private name: string = 'lucy';
 
         created():void{
-            console.log('%c子组件created','font-size:38px;color:blue')
+            // console.log('%c子组件created','font-size:38px;color:blue')
         }
 
         mounted():void{
-            console.log('%c子组件mounted','font-size:36px;color:green')
+            // console.log('%c子组件mounted','font-size:36px;color:green')
         }
     }
 

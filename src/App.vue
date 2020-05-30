@@ -61,19 +61,19 @@ export default class App extends Vue{
             const detail = await this.axios.post("/user/detail",{
                 uid:userId
             })
-            console.log('详情',detail)
+            // console.log('详情',detail)
 
             const playlist = await this.axios.post("/user/subcount")
-            console.log('playlist',playlist)
+            // console.log('playlist',playlist)
         }else{
-            console.log("未登录")
+            // console.log("未登录")
         }
 
         
     }
 
     mounted():void{
-        console.log('%cApp mounted','font-size:36px;color:orange')
+        // console.log('%cApp mounted','font-size:36px;color:orange')
     }
    
 }

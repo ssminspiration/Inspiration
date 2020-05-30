@@ -49,7 +49,7 @@ export default class Player extends Vue{
     mounted():void{
         this.audioEle = this.$refs.audioEle;
 
-        console.log('用户id',this.userId)
+        // console.log('用户id',this.userId)
         
         // this.axios.post("/user/playlist",{
         //     uid:userId
@@ -62,12 +62,12 @@ export default class Player extends Vue{
     @Watch("userId")
         idChange(n,o){
             if(n){
-                console.log('用户id',this.userId)
+                // console.log('用户id',this.userId)
                 this.axios.post("/user/playlist",{
                     uid:this.userId
                 })
                 .then((res)=>{
-                    console.log('歌单',res)
+                    // console.log('歌单',res)
                 })
             }
         }

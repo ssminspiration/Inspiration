@@ -1,11 +1,7 @@
 <template>
     <div class="user-home-wrapper">
-        <h1>{{this.$route.params.id}}</h1>
-        <h2>{{id}}</h2>
-        <h2>{{query}}</h2>
-        <h2>{{hello}}</h2>
-        <common-head></common-head>
-        <songs-list></songs-list>
+        <!-- <common-head></common-head> -->
+        <!-- <songs-list></songs-list> -->
     </div>
 </template>
 
@@ -20,12 +16,8 @@ import SongsList from './songslist.vue';
     }
 })
 export default class Hello extends Vue{
-    @Prop(String) private id!:string;
-    @Prop(String) private query!:string;
-    @Prop(String) private name!:string;
-
     created(){
-        console.log('home组件路由参数',)
+        console.log('%chome组件路由$route','font-size:36px;color:blue',this.$route)
     }
     
 }
