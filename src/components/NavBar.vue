@@ -15,8 +15,8 @@
                 <input type="text" placeholder="搜索">
             </div>
             
-            <div class="avatar-box" @mouseenter="handleEnter">
-                <el-avatar v-if="isLogin" :src="imgUrl" @click="handleEnter"></el-avatar>
+            <div class="avatar-box" @mouseenter="handleEnter" @mouseleave="handleLeave">
+                <el-avatar v-if="isLogin" :src="imgUrl"></el-avatar>
                 <el-button v-else type="text" @click.stop="goToLogin">登录</el-button>
                 
                 <div class="user-info" v-show="isLogin && showUserInfo">
@@ -51,7 +51,7 @@ export default class NavBar extends Vue{
     @Prop(String) name!:string;
     @Prop(Number) age!:number;
     hobby:string = 'running';
-    showUserInfo:boolean = true;
+    showUserInfo:boolean = false;
     menuList:dataList = [
         {
             text:'发现音乐',
@@ -87,8 +87,11 @@ export default class NavBar extends Vue{
     }
 
     handleEnter():void{
-        // console.log('mouseenter')
         this.showUserInfo = true;
+    }
+
+    handleLeave():void{
+        this.showUserInfo = false;
     }
 
     @Watch("$route")

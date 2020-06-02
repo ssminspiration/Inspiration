@@ -125,7 +125,6 @@ export default class Login extends Vue{
             if(res.data.code === 200 && res.data.loginType == 1){
                 // 登录成功
                 this.$store.commit("changeLoginStatus",true)
-                const token = res.data.token;
                 const userId = res.data.profile.userId;
                 const nickName = res.data.profile.nickname; 
                 const avatarUrl = res.data.profile.avatarUrl;
@@ -134,7 +133,8 @@ export default class Login extends Vue{
                     nickName,
                     avatarUrl
                 })
-                // console.log('%c登录状态','font-size:38px;color:red;',this.$store.state.loginStatus)
+                // 关闭登录弹窗
+                this.$emit('upDateLoginShow',false)
             }
             else{
                 // 表示手机号或密码不正确，或者该手机未注册

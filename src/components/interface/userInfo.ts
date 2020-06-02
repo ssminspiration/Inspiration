@@ -2,7 +2,7 @@
         [index:number]:{
             icon:string;
             text:string;
-            path:string;
+            path?:string;
             num?:number;
         }
     }

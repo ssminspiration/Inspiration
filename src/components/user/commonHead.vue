@@ -52,18 +52,18 @@ import {Vue, Component, Prop} from 'vue-property-decorator';
 import { State } from "vuex-class";
 @Component
 export default class Hello extends Vue{
-    avatarUrl:string = ''
+    avatarUrl:string = null;
     level:number = 0;
-    nickname:string = '';
+    nickname:string = null;
     gender:number = 1;
     eventCount:number = 0;
     follows:number = 0;
     fans:number = 0;
-    signature:string = '';
+    signature:string = null;
     provinceCode:number = 0;
     cityCode:number = 0;
-    location:string = '';
-    age:string | number = '';
+    location:string = null;
+    age:string | number = null;
 
 
 
@@ -89,9 +89,9 @@ export default class Hello extends Vue{
 
         // console.log('用户详情',res)
     }
-    beforeRouteLeave(){
-        // console.log('%cbeforeRouteLeave','font-size:36px;color:red')
-    }
+    // beforeRouteLeave(){
+    //     // console.log('%cbeforeRouteLeave','font-size:36px;color:red')
+    // }
 
     mounted():void{
         // console.log('%c$router是路由实例','font-size:36px;color:red',this.$router)

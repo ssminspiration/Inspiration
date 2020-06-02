@@ -2,7 +2,7 @@
    <div class="user-info-dialog-wrap">
        <ul class="info-list">
            <li v-for="(item,index) in infoList" :key="index">
-                <router-link :to="item.path">
+                <router-link :to="item.path" @click.native="handleClick(item.path)">
                     <span class="iconfont iconBox" :class="item.icon"></span>
                     <span class="text">{{item.text}}</span>
                     <span class="num">{{item.num}}</span>
@@ -47,9 +47,28 @@ export default class UserInfo extends Vue{
        {
            icon:"icon-loginout",
            text:"退出",
-           path:"/logout",
+           path:""
        },
    ]
+
+    handleClick(path):void{
+        console.log('点击li')
+        if(path == ''){
+            // 退出登录
+            this.axios.post("/logout") 
+            .then((res)=>{
+                console.log('退出成功',res,this.$route)
+                if(this.$route.path !== '/'){
+                    this.$router.push({path:"/"})
+                }else{
+                    this.$router.go(0)
+                }
+            })
+            .catch((err)=>{
+                console.log('退出登录失败')
+            })
+        }
+    }
 }
 </script>
 

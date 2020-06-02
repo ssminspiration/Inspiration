@@ -41,7 +41,6 @@ export default class Player extends Vue{
         return require('../assets/music/eason.mp3')
     }
 
-    @State('requestDone') requestStatus;
     @State( state => state.userInfo.userId) userId;
 
     created(){

@@ -5,6 +5,8 @@ import Friends from '../views/Friends.vue'
 import Discover from '../views/Discover.vue'
 import UserHome from '../components/user/home.vue';
 import UserPrivate from "../components/Msg/private.vue";
+import axios from 'axios';
+import store from '../store/index'
 Vue.use(VueRouter)
 
 const routes = [
@@ -66,7 +68,14 @@ const routes = [
             {
                 path:"home",
                 component:UserHome,
-                name:"home"
+                name:"home",
+                // 路由独享的守卫
+                beforeEnter:(to,from,next)=>{
+                    // 这些守卫与全局前置守卫的方法参数是一样的
+
+                    console.log('%c/user/home路由独享守卫beforeEnter','font-size:36px;color:purple',to,from)
+                    next()
+                }
                 // redirect:"event",
                 // redirect:{name:"event"}, //重定向的目标也可以是一个命名的路由
                 // redirect:() => "event",  // 可以是一个方法，返回重定向的方法 
@@ -104,10 +113,17 @@ const routes = [
         path:"/msg",
         name:"msg",
         component:() => import("../views/Msg.vue"),
+        
         children:[
             {
                 path:"m/private",
                 component:UserPrivate,
+                beforeEnter:(to,from,next)=>{
+                    // 这些守卫与全局前置守卫的方法参数是一样的
+        
+                    console.log('%c/msg/m/private路由独享守卫beforeEnter','font-size:36px;color:purple',to,from)
+                    next()
+                },
             }
         ]
     }
@@ -121,12 +137,38 @@ const router = new VueRouter({
 
 // 全局前置守卫
 router.beforeEach((to,from,next)=>{
-    console.log("%c全局前置守卫","font-size:36px;color:pink",to,from)
-    next(false)
+    console.log("%c全局前置守卫","font-size:36px;color:pink",to,from,store)
+    axios.post("/login/status")
+    .then((res)=>{
+        // console.log('%c已登录','font-size:36px;color:green',res)
+        if(res.data.code === 200){
+            console.log('%c已登录','font-size:36px;color:green',res)
+            const  userId:string = res.data.profile.userId,
+                    nickName:string = res.data.profile.nickname,
+                    avatarUrl:string = res.data.profile.avatarUrl;
+
+                    store.commit('changeLoginStatus',true)
+                    store.commit('changeUserInfo',{
+                        userId,
+                        nickName,
+                        avatarUrl
+                    })
+        }else{
+            // 未登录
+            console.log("%c未登录","font-size:36px;color:blue")
+        }
+    })
+    .catch((err)=>{
+        console.log('请求出错',err)
+    })
+    .finally(()=>{
+        next()
+    })
     /*
         导航表示路由正在发生改变
         当一个导航触发时，全局前置守卫按照创建顺序调用。守卫是异步解析执行，此时导航在所有守卫resolve完之前一直处于等待中
-        每个守卫方法接受三个参数：
+        
+        
         to: Route: 即将要进入的目标 路由对象
         from: Route: 当前导航正要离开的路由
         next: Function: 一定要调用该方法来resolve这个钩子。执行效果依赖next方法的调用参数
@@ -136,4 +178,57 @@ router.beforeEach((to,from,next)=>{
             next(error)如果传入next的参数是一个Error实例，则导航会被终止且该错误会被传递给router.onError()注册过的回调
     */
 })
+
+// 全局解析守卫
+router.beforeResolve((to,from,next)=>{
+      console.log('%c全局解析守卫',"font-size:36px;color:red")
+      next()
+})
+
+// 全局后置钩子
+router.afterEach((to,from)=>{
+    console.log("%c全局后置钩子","font-size:36px;color:green")
+})
+
+
 export default router
+/*
+    导航被触发
+    在失活的组件里调用beforeRouteLeave守卫
+    调用全局的beforeEach守卫
+    在重用的组件里调用beforeRouteUpdate守卫
+    在路由配置里调用beforeEnter
+    解析异步路由组件
+    在被激活的组件里调用beforeRouteEnter
+    调用全局的beforeResolve守卫
+    导航被确认
+    调用全局的afterEach钩子
+    触发DOM更新
+    用创建好的实例调用beforeRouteEnter守卫中传给next的回调函数
+*/
+
+/*
+    全局：
+    beforeEach() 全局前置守卫
+    beforeResolve() 全局解析守卫
+    afterEach()     全局后置钩子
+
+    路由：
+    beforeEnter()  路由独享的守卫，与全局前置守卫的方法参数是一样的
+
+    组件：
+    beforeRouteEnter()
+    beforeRouteUpdate()
+    beforeRouteLeave()
+
+
+    beforeEach()
+    beforeResolve()
+    afterEach()
+
+    beforeEnter()
+
+    beforeRouteEnter()
+    beforeRouteUpdate()
+    beforeRouteLeave()
+*/

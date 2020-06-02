@@ -19,8 +19,17 @@ Vue.use(Avatar);
 // Vue.use(VueAwesomeSwiper);  //全局使用swiper
 Vue.prototype.$message = Message;
 
-window['wyy'] = new Vue({
+let wyy = new Vue({
   router,
   store,
-  render: h => h(App)
+  render: h => h(App),
+  beforeRouteEnter(){
+      console.log('%cmain.tsbeforeRouteEnter','font-size:36px;color:purple')
+  },
+  beforeRouteLeave(){
+      console.log('%cmain.tsbeforeRouteLeave','font-size:36px;color:purple')
+  },
 }).$mount('#app')
+
+window['wyy'] = wyy;
+export default wyy;
